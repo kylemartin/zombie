@@ -412,6 +412,7 @@ Resources.decodeBody = (request, response, next)->
       for typeOption in typeOptions
         if /^charset=/.test(typeOption)
           charset = typeOption.split("=")[1]
+          charset = charset.replace(/\"/g,'')
           break
       response.body = response.body.toString(charset || "utf8")
   next()
