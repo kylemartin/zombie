@@ -1166,10 +1166,14 @@ class Browser extends EventEmitter
     indent = (lines)-> lines.map((l) -> "  #{l}\n").join("")
     process.stdout.write "Zombie: #{Browser.VERSION}\n\n"
     process.stdout.write "URL: #{@window.location.href}\n"
-    process.stdout.write "History:\n#{indent @window.history.dump()}\n"
-    process.stdout.write "Cookies:\n#{indent @cookies.dump()}\n"
-    process.stdout.write "Storage:\n#{indent @_storages.dump()}\n"
-    process.stdout.write "Eventloop:\n#{indent @eventLoop.dump()}\n"
+    if typeof(@window.history.dump) != "undefined"
+      process.stdout.write "History:\n#{indent @window.history.dump()}\n"
+    if typeof(@cookies.dump) != "undefined"
+      process.stdout.write "Cookies:\n#{indent @cookies.dump()}\n"
+    if typeof(@_storages.dump) != "undefined"
+      process.stdout.write "Storage:\n#{indent @_storages.dump()}\n"
+    if typeof(@eventLoop.dump) != "undefined"
+      process.stdout.write "Eventloop:\n#{indent @eventLoop.dump()}\n"
     if @document
       html = @document.outerHTML
       html = html.slice(0, 497) + "..." if html.length > 497
